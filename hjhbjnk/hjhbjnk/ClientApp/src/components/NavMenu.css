@@ -1,0 +1,47 @@
+﻿@import url(http://fonts.googleapis.com/css?family=Oxygen+Mono);
+@charset "UTF-8";
+
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+navbar-expand-sm {
+    position: absolute;
+    top: 10%;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+header {
+    background-color: rgba(0,0,0,0.6);
+}
+.navbar-brand {
+    font-family: 'Oxygen Mono', Tahoma, Arial, sans-serif;
+    font-size: 12px;
+}
+html {
+    font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+a:not([href]):not([tabindex]){
+color:white;
+}
+
+
+a:not([href]):not([tabindex]):hover, a:not([href]):not([tabindex]):focus{
+    color:white;
+}
+.navbar-nav.flex-grow {
+    position: relative;
+    top: 0;
+    left: 60px;
+    bottom: 0;
+    right: 0;
+}
