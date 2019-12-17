@@ -195,3 +195,18 @@ top:120px;
 .labelname {
 color:white;
 }
+
+.hiddenInput {
+visibility:hidden;
+}
+
+.content {
+    position: absolute;
+    left: 550px;
+    top: 120px;
+}
+.table table-striped {
+    position: absolute;
+    left: 550px;
+}
+

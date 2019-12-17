@@ -3,6 +3,7 @@ import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLi
 import { Link } from 'react-router-dom';
 import './NavMenu.css';
 import userpng from './user.png';
+import cookie from 'react-cookies';
 
 export class NavMenu extends Component {
   static displayName = NavMenu.name;
@@ -33,7 +34,7 @@ export class NavMenu extends Component {
                 <NavItem className>
                     <img src={userpng} width={25, 25} />
                     <b> </b>
-                    <NavbarBrand>Ivanov Ivan</NavbarBrand>
+                                <NavbarBrand>{cookie.load('workerName')}</NavbarBrand>
                 </NavItem>
                             <NavItem>
                                 <NavbarBrand>{new Date().toLocaleDateString()}</NavbarBrand>

@@ -24,23 +24,23 @@ namespace hjhbjnk.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TblBook>>> GetTblBook()
         {
-            return await _context.TblBook.Include(x => x.TblBookGenre)
-                /*.ThenInclude(tg=>tg.Genre.Name)*/
-            .Include(pub => pub.Publisher)
-            .ToArrayAsync();
-
-           /* return await _context.TblBook.Select(book => new TblBook
-             {
-                
-             }
-            ).ToListAsync();*/
+            return await _context.TblBook
+            .Include(x => x.TblBookAuthor)
+            .Include(x => x.TblBookGenre)
+            .Include(x => x.TblRecord)
+            .Include(x => x.Publisher)
+            .ToListAsync();
         }
 
         // GET: api/TblBooks/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<TblBook>> GetTblBook(int id)
+        public async Task<ActionResult<IEnumerable<TblBook>>> GetTblBook(int id)
         {
-            var tblBook = await _context.TblBook.FindAsync(id);
+            var tblBook = await _context.TblBook.Where(x => x.IdBook == id)
+            .Include(x => x.TblBookAuthor)
+            .Include(x => x.TblBookGenre)
+            .Include(x => x.TblRecord)
+            .Include(x => x.Publisher).ToListAsync();
 
             if (tblBook == null)
             {

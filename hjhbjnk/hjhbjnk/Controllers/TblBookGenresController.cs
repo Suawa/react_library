@@ -76,43 +76,41 @@ namespace hjhbjnk.Controllers
         // POST: api/TblBookGenres
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
+        //костыль возвращающий лишь статус одного эмелемнта
         [HttpPost]
-        public async Task<ActionResult<TblBookGenre>> PostTblBookGenre(TblBookGenre tblBookGenre)
+        public async Task<ActionResult<TblBookGenre>> PostTblBookGenre(List<TblBookGenre> tblBookGenreList)
         {
-            _context.TblBookGenre.Add(tblBookGenre);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (TblBookGenreExists(tblBookGenre.BookId))
+            foreach (TblBookGenre tblBookGenre in tblBookGenreList)
+            { 
+                _context.TblBookGenre.Add(tblBookGenre);
+                try
                 {
-                    return Conflict();
+                    await _context.SaveChangesAsync();
                 }
-                else
+                catch (DbUpdateException)
                 {
-                    throw;
+                    
                 }
             }
-
-            return CreatedAtAction("GetTblBookGenre", new { id = tblBookGenre.BookId }, tblBookGenre);
+            return CreatedAtAction("GetTblBookGenre", new { id = tblBookGenreList[0].BookId }, tblBookGenreList[0]);
         }
 
         // DELETE: api/TblBookGenres/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<TblBookGenre>> DeleteTblBookGenre(int id)
+        //[HttpDelete("{id}&{idg}")]
+        public async Task<ActionResult<TblBookGenre>> DeleteTblBookGenre(List<TblBookGenre> tblBookGenreList)
         {
-            var tblBookGenre = await _context.TblBookGenre.FindAsync(id);
-            if (tblBookGenre == null)
+            foreach (TblBookGenre tblBookGenre in tblBookGenreList)
             {
-                return NotFound();
+                var tblBookGenreFind = await _context.TblBookGenre.FindAsync(tblBookGenre.BookId, tblBookGenre.GenreId);
+                if (tblBookGenreFind == null)
+                {
+                    return NotFound();
+                }
+
+                _context.TblBookGenre.Remove(tblBookGenreFind);
+                await _context.SaveChangesAsync();           
             }
-
-            _context.TblBookGenre.Remove(tblBookGenre);
-            await _context.SaveChangesAsync();
-
-            return tblBookGenre;
+            return tblBookGenreList[0];
         }
 
         private bool TblBookGenreExists(int id)

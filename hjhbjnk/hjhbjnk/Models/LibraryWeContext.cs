@@ -72,7 +72,7 @@ namespace hjhbjnk.Models
                 entity.HasOne(d => d.Publisher)
                     .WithMany(p => p.TblBook)
                     .HasForeignKey(d => d.PublisherId)
-                    .OnDelete(DeleteBehavior.Cascade)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Book_Publisher");
             });
 
@@ -96,7 +96,6 @@ namespace hjhbjnk.Models
                 entity.HasOne(d => d.Book)
                     .WithMany(p => p.TblBookAuthor)
                     .HasForeignKey(d => d.BookId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Book_Author_Book");
             });
 
@@ -114,7 +113,6 @@ namespace hjhbjnk.Models
                 entity.HasOne(d => d.Book)
                     .WithMany(p => p.TblBookGenre)
                     .HasForeignKey(d => d.BookId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Book_Genre_Book");
 
                 entity.HasOne(d => d.Genre)
@@ -336,6 +334,8 @@ namespace hjhbjnk.Models
                     .IsRequired()
                     .HasColumnName("Full_name")
                     .HasMaxLength(50);
+
+                entity.Property(e => e.Password).IsRequired();
 
                 entity.Property(e => e.PostId).HasColumnName("Post_ID");
 
