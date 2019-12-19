@@ -2,7 +2,12 @@
 import { Main } from '../Main';
 import '../styles.css';
 import cookie from 'react-cookies';
-import { Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom';
+import ReactExport from "react-data-export";
+
+const ExcelFile = ReactExport.ExcelFile;
+const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
+const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
 
 
 export class TableDirection extends Component {
@@ -10,7 +15,7 @@ export class TableDirection extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { directions: [], loading: true };
+        this.state = { directions: [], directionsWithInstName: [], loading: true };
 
         this.FuncDelete = this.FuncDelete.bind(this);
         this.FuncEdit = this.FuncEdit.bind(this);
@@ -21,6 +26,19 @@ export class TableDirection extends Component {
     }
 
     renderDirections(directions) {
+
+        const Export = () => {
+            return (
+                <ExcelFile filename={"Направления " + new Date().toLocaleDateString()} element={<button className="btn exportBtn">Экспорт в Excel</button>}>
+                    <ExcelSheet data={this.state.directionsWithInstName} name="Направления">
+                        <ExcelColumn label="Номер направления" value="idDirection" />
+                        <ExcelColumn label="Институт" value="instituteName" />
+                        <ExcelColumn label="Название" value="name" />
+                    </ExcelSheet>
+                </ExcelFile >
+            );
+        }
+
         return (
             <div>
                 <Main />
@@ -28,6 +46,7 @@ export class TableDirection extends Component {
                     <thead>
                         <tr>
                             <th>Номер направления</th>
+                            <th>Институт</th>
                             <th>Название</th>  
                         </tr>
                     </thead>
@@ -36,6 +55,7 @@ export class TableDirection extends Component {
                             directions.map(direction =>
                                 <tr key={direction.idDirection}>
                                     <td>{direction.idDirection}</td>
+                                    <td>{direction.institute.name}</td>
                                     <td>{direction.name}</td>
                                     <td><a className="action" onClick={(id) => this.FuncDelete(direction.idDirection)}>Удалить</a></td>
                                     <td><a className="action" onClick={(id) => this.FuncEdit(direction.idDirection)}>Редактировать</a></td>
@@ -43,7 +63,7 @@ export class TableDirection extends Component {
                             )}
                     </tbody>
                 </table>
-
+                <Export/>
             </div>
         );
     }
@@ -68,6 +88,14 @@ export class TableDirection extends Component {
         const response = await fetch('api/TblDirections');
         const data = await response.json();
         this.setState({ directions: data, loading: false });
+
+        this.state.directions = this.state.directions
+            .forEach(direction => this.state.directionsWithInstName
+                .push({
+                    idDirection: direction.idDirection,
+                    instituteName: direction.institute.name,
+                    name: direction.name
+                }));
     }
 
     FuncDelete(id) {

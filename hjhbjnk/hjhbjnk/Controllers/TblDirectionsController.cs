@@ -24,7 +24,7 @@ namespace hjhbjnk.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TblDirection>>> GetTblDirection()
         {
-            return await _context.TblDirection.Include(x=>x.InstituteId).ToListAsync();
+            return await _context.TblDirection.Include(x=>x.Institute).ToListAsync();
         }
 
         // GET: api/TblDirections/5

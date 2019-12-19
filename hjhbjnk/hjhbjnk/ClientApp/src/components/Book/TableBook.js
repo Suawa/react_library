@@ -3,7 +3,12 @@ import { Link } from 'react-router-dom';
 import { Main } from '../Main';
 import '../styles.css';
 import cookie from 'react-cookies';
-import { Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom';
+import ReactExport from "react-data-export";
+
+const ExcelFile = ReactExport.ExcelFile;
+const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
+const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
 
 
 export class TableBook extends Component {
@@ -11,7 +16,7 @@ export class TableBook extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { books: [], loading: true };
+        this.state = { books: [], booksWithPubNames:[], loading: true };
 
         this.FuncDelete = this.FuncDelete.bind(this);
         this.FuncEdit = this.FuncEdit.bind(this);
@@ -22,15 +27,30 @@ export class TableBook extends Component {
     }
 
     renderBooksTable(books) {
+
+        const Export = () => {
+            return (
+                <ExcelFile filename={"Книги " + new Date().toLocaleDateString()} element={<button className="btn exportBtn">Экспорт в Excel</button>}>
+                    <ExcelSheet data={this.state.booksWithPubNames} name="Книги">
+                        <ExcelColumn label="Номер книги" value="idBook" />
+                        <ExcelColumn label="Издатель" value="publisherName" />
+                        <ExcelColumn label="Название" value="name" />
+                        <ExcelColumn label="Год" value="year" />
+                        <ExcelColumn label="Число" value="count" />
+                    </ExcelSheet>
+                </ExcelFile >
+            );
+        }
+
         return (
-            <div>
+            <div className="mainDiv">
                 <Main />
                 <table className='table table-striped' aria-labelledby="tabelLabel">
                     <thead>
                         <tr>
                             <th>Номер книги</th>
                             <th>Издатель</th>
-                            <th>Имя</th>
+                            <th>Название</th>
                             <th>Год</th>
                             <th>Число</th>
                         </tr>
@@ -50,7 +70,7 @@ export class TableBook extends Component {
                             )}
                     </tbody>
                 </table>
-
+                <Export />
             </div>
         );
     }
@@ -75,6 +95,16 @@ export class TableBook extends Component {
         const response = await fetch('api/TblBooks');
         const data = await response.json();
         this.setState({ books: data, loading: false });
+
+        this.state.books = this.state.books
+            .forEach(book => this.state.booksWithPubNames
+                .push({
+                    idBook: book.idBook,
+                    publisherName: book.publisher.name,
+                    name: book.name,
+                    year: book.year,
+                    count: book.count
+                }));
     }
 
     FuncDelete(id) {

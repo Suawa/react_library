@@ -3,8 +3,15 @@ import { Link } from 'react-router-dom';
 import { Main } from '../Main';
 import '../styles.css';
 import cookie from 'react-cookies';
-import { Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom';
+import ReactExport from "react-data-export";
+import deleteIcon from '../deleteIcon.png';
+import editIcon from '../editIcon.png';
 
+
+const ExcelFile = ReactExport.ExcelFile;
+const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
+const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
 
 export class TableAuthor extends Component {
     static displayName = TableAuthor.name;
@@ -21,15 +28,30 @@ export class TableAuthor extends Component {
         this.populateAuthorsData();
     }
 
+
     renderAuthorsTable(authors) {
+
+        const Export = () => {
+            return (
+                <ExcelFile element={<button className="btn exportBtn">Экспорт в Excel</button>}>
+                    <ExcelSheet data={this.state.authors} name="Авторы">
+                        <ExcelColumn label="Номер автора" value="idAuthor" />
+                        <ExcelColumn label="Имя" value="name" />
+                    </ExcelSheet>
+                </ExcelFile >
+            );
+        }
+
         return (
-            <div>
+            <div className="mainDiv">
                 <Main />
                 <table className='table table-striped' aria-labelledby="tabelLabel">
                     <thead>
                         <tr>
                             <th>Номер автора</th>
-                            <th>Имя</th>  
+                            <th>Имя</th>
+                            <th></th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -38,13 +60,17 @@ export class TableAuthor extends Component {
                                 <tr key={author.idAuthor}>
                                     <td>{author.idAuthor}</td>
                                     <td>{author.name}</td>
-                                    <td><a className="action" onClick={(id) => this.FuncDelete(author.idAuthor)}>Удалить</a></td>
-                                    <td><a className="action" onClick={(id) => this.FuncEdit(author.idAuthor)}>Редактировать</a></td>
+                                    <td><a className="action" onClick={(id) => this.FuncDelete(author.idAuthor)}>
+                                        <img src={deleteIcon} width={20,20} />
+                                    </a></td>
+                                    <td><a className="action" onClick={(id) => this.FuncEdit(author.idAuthor)}>
+                                        <img src={editIcon} width={20, 20} />
+                                    </a></td>
                                 </tr>
                             )}
                     </tbody>
                 </table>
-
+                <Export/>
             </div>
         );
     }

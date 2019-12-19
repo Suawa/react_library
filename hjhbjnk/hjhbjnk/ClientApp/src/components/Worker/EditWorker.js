@@ -15,12 +15,14 @@ export class EditWorker extends Component {
             worker: [],
             posts: [],
             selectedPost: [],
-            pizda: false,
-            loading: true
+            isAdmin: false,
+            loading: true,
+            saveBtn: null
         };
 
         this.FuncSave = this.FuncSave.bind(this);
         this.FuncCancel = this.FuncCancel.bind(this);
+
     }
 
     componentDidMount() {
@@ -29,10 +31,7 @@ export class EditWorker extends Component {
     }
 
     renderWorker() {
-        this.pizda = cookie.load('isAdmin');
-
-        console.log(this.pizda);
-
+        console.log(cookie.load('isAdmin'));
         return (
             <div>
                 <Main />
@@ -54,9 +53,7 @@ export class EditWorker extends Component {
                             />
                             <label>Пароль</label>
                             <input name="password" defaultValue={this.state.worker.password} />
-                            <div>
-                                {this.pizda && <button type="submit" >Сохранить</button>}
-                            </div>
+                            {this.saveBtn}
                             <button onClick={this.FuncCancel}>Отмена</button>
                         </form>
                     }
@@ -66,6 +63,12 @@ export class EditWorker extends Component {
     }
 
     render() {
+        //я ебал
+        if (cookie.load('isAdmin'))
+            this.saveBtn = < button type="submit" > Сохранить</button >;
+        else
+            this.saveBtn = null;
+
         if (cookie.load('workerId')) {
             let contents = this.state.loading
                 ? <p><em>Загрузка...</em></p>

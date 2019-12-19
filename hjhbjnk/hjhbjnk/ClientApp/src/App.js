@@ -36,6 +36,12 @@ import { TableGroup } from './components/Group/TableGroup';
 import { AddWorker } from './components/Worker/AddWorker';
 import { EditWorker } from './components/Worker/EditWorker';
 import { TableWorker } from './components/Worker/TableWorker';
+import { AddStudent } from './components/Student/AddStudent';
+import { EditStudent } from './components/Student/EditStudent';
+import { TableStudent } from './components/Student/TableStudent';
+import { AddRecord } from './components/Record/AddRecord';
+import { EditRecord } from './components/Record/EditRecord';
+import { TableRecord } from './components/Record/TableRecord';
 
 import './custom.css'
 
@@ -45,7 +51,7 @@ export default class App extends Component {
   render () {
     return (
       <Layout>
-        <Route exact path='/' component={Home} />
+        <Route exact path='/' component={Main} />
         <Route path='/counter' component={Counter} />
         <Route path='/fetch-data' component={FetchData} />
         <Route path='/Login' component={Login} />
@@ -90,6 +96,14 @@ export default class App extends Component {
             <Route path='/workers' component={TableWorker} />
             <Route path='/worker/edit/:idWorker' component={EditWorker} />
             <Route path='/worker/add' component={AddWorker} />
+
+            <Route path='/students' component={TableStudent} />
+            <Route path='/student/edit/:idStudent' component={EditStudent} />
+            <Route path='/student/add' component={AddStudent} />
+
+            <Route path='/records' component={TableRecord} />
+            <Route path='/record/edit/:idRecord' component={EditRecord} />
+            <Route path='/record/add' component={AddRecord} />
 
       </Layout>
     );

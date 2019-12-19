@@ -206,7 +206,11 @@ visibility:hidden;
     top: 120px;
 }
 .table table-striped {
+    border: 10px solid black;
     position: absolute;
     left: 550px;
 }
 
+.mainDiv {
+    padding-left:120px;
+}

@@ -12,7 +12,7 @@ export class Help extends Component {
         return (
             <div>
                 <Main />
-                <a className='temp'>Справка</a>
+                <h1>Здесь должна находиться справочная информация по использованию данного веб-приложения</h1>
             </div>
         );
     }

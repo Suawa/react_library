@@ -25,7 +25,7 @@ export class Main extends Component {
                     <li><Link tag={Link} to="/Main">Главная</Link></li>
                     <li class='active has-sub'><a>Справочники</a>
                         <ul>
-                            <li><Link tag={Link} to="/journal">Журналы</Link></li>
+                            <li><Link tag={Link} to="/records">Журналы</Link></li>
                             <li><Link tag={Link} to="/books">Книги</Link></li>
                             <li><Link tag={Link} to="/authors">Авторы</Link></li>
                             <li><Link tag={Link} to="/publishers">Издательства</Link></li>
@@ -47,11 +47,8 @@ export class Main extends Component {
                                     <li><Link tag={Link} to="/Report">По сотруднику</Link></li>
                                 </ul>
                             </li>
-                            <li><Link tag={Link} to="/Report">Задолженности</Link></li>
-                            <li><Link tag={Link} to="/Report">Состояние книг</Link></li>
                             <li><Link tag={Link} to="/Report">Популярные жанры</Link></li>
                             <li><Link tag={Link} to="/Report">Популярные писатели</Link></li>
-                            <li><Link tag={Link} to="/Report">Сотрудники</Link></li>
                         </ul>
                     </li>
                     <li><Link tag={Link} to="/Help">Справка</Link></li>

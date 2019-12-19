@@ -24,7 +24,7 @@ namespace hjhbjnk.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TblWorker>>> GetTblWorker()
         {
-            return await _context.TblWorker.ToListAsync();
+            return await _context.TblWorker.Include(x=>x.Post).ToListAsync();
         }
 
         // GET: api/TblWorkers/5

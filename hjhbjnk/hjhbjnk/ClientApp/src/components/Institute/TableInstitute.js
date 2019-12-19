@@ -2,7 +2,12 @@
 import { Main } from '../Main';
 import '../styles.css';
 import cookie from 'react-cookies';
-import { Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom';
+import ReactExport from "react-data-export";
+
+const ExcelFile = ReactExport.ExcelFile;
+const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
+const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
 
 
 export class TableInstitute extends Component {
@@ -21,6 +26,18 @@ export class TableInstitute extends Component {
     }
 
     renderInstitutes(institutes) {
+
+        const Export = () => {
+            return (
+                <ExcelFile filename={"Институты " + new Date().toLocaleDateString()} element={<button className="btn exportBtn">Экспорт в Excel</button>}>
+                    <ExcelSheet data={this.state.institutes} name="Институты">
+                        <ExcelColumn label="Номер института" value="idInstitute" />
+                        <ExcelColumn label="Название" value="name" />
+                    </ExcelSheet>
+                </ExcelFile >
+            );
+        }
+
         return (
             <div>
                 <Main />
@@ -43,7 +60,7 @@ export class TableInstitute extends Component {
                             )}
                     </tbody>
                 </table>
-
+                <Export/>
             </div>
         );
     }

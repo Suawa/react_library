@@ -51,7 +51,7 @@ export class EditPost extends Component {
 
             return (
                 <div>
-                    <h1 id="tabelLabel">Жанры</h1>
+                    <h1 id="tabelLabel">Должность</h1>
                     {contents}
                 </div>
             );

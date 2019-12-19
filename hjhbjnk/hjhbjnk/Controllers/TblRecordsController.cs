@@ -24,7 +24,7 @@ namespace hjhbjnk.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TblRecord>>> GetTblRecord()
         {
-            return await _context.TblRecord.ToListAsync();
+            return await _context.TblRecord.Include(y=>y.Book).Include(y=>y.Student).Include(y=>y.Worker).ToListAsync();
         }
 
         // GET: api/TblRecords/5

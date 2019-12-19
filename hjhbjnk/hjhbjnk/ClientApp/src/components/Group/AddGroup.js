@@ -59,7 +59,7 @@ export class AddGroup extends Component {
 
             return (
                 <div>
-                    <h1 id="tabelLabel">Направление</h1>
+                    <h1 id="tabelLabel">Группа</h1>
                     {contents}
                 </div>
             );

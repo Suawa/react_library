@@ -24,7 +24,7 @@ namespace hjhbjnk.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TblStudent>>> GetTblStudent()
         {
-            return await _context.TblStudent.ToListAsync();
+            return await _context.TblStudent.Include(y=>y.Group).ToListAsync();
         }
 
         // GET: api/TblStudents/5

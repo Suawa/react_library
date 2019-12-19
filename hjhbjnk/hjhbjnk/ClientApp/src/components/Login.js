@@ -55,7 +55,7 @@ export class Login extends Component {
                             <input name="idWorker" type="text"></input>
                             <p />
                             <label className="labelname">Пароль</label>
-                            <input name="password" type="text"></input>
+                            <input name="password" type="password"></input>
                             <p />
                             <button type="submit">Вход</button>
                         </div>
