@@ -85,7 +85,7 @@ export class AddWorker extends Component {
             body: JSON.stringify({
                 postId: this.state.selectedPost[0].idPost,
                 fullName: event.target.elements.fullName.value,
-                password: event.target.elements.fullName.value,
+                password: event.target.elements.password.value,
                 isAdmin: false,
 
             })

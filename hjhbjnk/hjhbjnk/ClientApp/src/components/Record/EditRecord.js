@@ -183,7 +183,6 @@ export class EditRecord extends Component {
                 idRecord: idRecord,
                 studentId: this.state.selectedStudent[0].idStudent,
                 bookId: this.state.selectedBook[0].idBook,
-                workerId: this.state.selectedWorker[0].idWorker,
                 dateOfIssue: event.target.elements.DOI.value,
                 dateOfIssueP: event.target.elements.DORP.value,
                 dateOfIssueF: event.target.elements.DORF.value,

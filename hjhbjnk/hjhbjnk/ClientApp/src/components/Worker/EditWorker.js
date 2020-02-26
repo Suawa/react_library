@@ -63,7 +63,7 @@ export class EditWorker extends Component {
     }
 
     render() {
-        //я ебал
+        //я
         if (cookie.load('isAdmin'))
             this.saveBtn = < button type="submit" > Сохранить</button >;
         else

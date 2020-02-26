@@ -22,6 +22,7 @@ export class TableAuthor extends Component {
 
         this.FuncDelete = this.FuncDelete.bind(this);
         this.FuncEdit = this.FuncEdit.bind(this);
+        this.resetLoading = this.resetLoading.bind(this);
     }
 
     componentDidMount() {
@@ -33,7 +34,7 @@ export class TableAuthor extends Component {
 
         const Export = () => {
             return (
-                <ExcelFile element={<button className="btn exportBtn">Экспорт в Excel</button>}>
+                <ExcelFile filename={"Авторы " + new Date().toLocaleDateString()} element={<button className="btn exportBtn">Экспорт в Excel</button>}>
                     <ExcelSheet data={this.state.authors} name="Авторы">
                         <ExcelColumn label="Номер автора" value="idAuthor" />
                         <ExcelColumn label="Имя" value="name" />
@@ -70,6 +71,9 @@ export class TableAuthor extends Component {
                             )}
                     </tbody>
                 </table>
+                <Link to="/author/add">
+                    <button onClick={()=>this.resetLoading()} className="btn">Добавить</button>
+                </Link>
                 <Export/>
             </div>
         );
@@ -98,17 +102,26 @@ export class TableAuthor extends Component {
     }
 
     FuncDelete(id) {
+        const conf = window.confirm("Вы точно хотите удалить эту запись?");
+        if (conf) {
         try {
-            fetch('api/TblAuthors/' + id, {
-                method: 'delete'
-            }).then(document.location.reload(true));
+            //fetch('api/TblBookAuthors/checkauthor/' + id).then(response => console.log(response.json()));
+            
+                fetch('api/TblAuthors/' + id, {
+                    method: 'delete'
+                }).then(document.location.reload(true)/*response => console.log(response.json())*/);
+            }
+        catch{ alert("НЕА"); }
         }
-        catch{ alert("У этого автора есть книги, сначала удалите их!") }
     }
 
     FuncEdit(id) {
+        this.resetLoading();
         this.props.history.push("/author/edit/"+id);
     }
 
+    resetLoading() {
+        this.setState({ loading: true });
+    }
 
 }

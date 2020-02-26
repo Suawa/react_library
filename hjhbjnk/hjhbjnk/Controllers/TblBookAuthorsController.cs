@@ -120,6 +120,13 @@ namespace hjhbjnk.Controllers
             return tblBookAuthorList[0];
         }
 
+        //
+        [HttpGet("checkauthor/{id}")]
+        public bool TblAuthorExists(int id)
+        {
+            return _context.TblBookAuthor.Any(e => e.AuthorId == id);
+        }
+
         private bool TblBookAuthorExists(int id)
         {
             return _context.TblBookAuthor.Any(e => e.BookId == id);

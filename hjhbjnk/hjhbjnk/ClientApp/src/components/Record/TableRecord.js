@@ -5,6 +5,8 @@ import cookie from 'react-cookies';
 import { Redirect } from 'react-router-dom';
 import Moment from 'moment';
 import ReactExport from "react-data-export";
+import { Link } from 'react-router-dom';
+
 
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
@@ -20,6 +22,9 @@ export class TableRecord extends Component {
 
         this.FuncDelete = this.FuncDelete.bind(this);
         this.FuncEdit = this.FuncEdit.bind(this);
+        this.resetLoading = this.resetLoading.bind(this);
+
+
     }
 
     componentDidMount() {
@@ -59,6 +64,8 @@ export class TableRecord extends Component {
                             <th>Дата возврата план</th>
                             <th>Дата возврата факт</th>
                             <th>ISBN</th>
+                            <th></th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -79,6 +86,9 @@ export class TableRecord extends Component {
                             )}
                     </tbody>
                 </table>
+                <Link to="/record/add">
+                    <button onClick={() => this.resetLoading()} className="btn">Добавить</button>
+                </Link>
                 <Export/>
             </div>
         );
@@ -121,17 +131,25 @@ export class TableRecord extends Component {
     }
 
     FuncDelete(id) {
-        try {
-            fetch('api/TblRecords/' + id, {
-                method: 'delete'
-            }).then(document.location.reload(true));
+        const conf = window.confirm("Вы точно хотите удалить эту запись?");
+        if (conf) {
+            try {
+
+                fetch('api/TblRecords/' + id, {
+                    method: 'delete'
+                }).then(document.location.reload(true));
+            }
+
+            catch{ alert("У этого направления есть группы, сначала удалите их!") }
         }
-        catch{ alert("У этого направления есть группы, сначала удалите их!") }
     }
 
     FuncEdit(id) {
+        this.resetLoading();
         this.props.history.push("/record/edit/"+id);
     }
 
-
+    resetLoading() {
+        this.setState({ loading: true });
+    }
 }
